@@ -20,7 +20,7 @@ class Server
   private $refClass = null;
 
 
-  public function __construct($methodHandler, $transport = null)
+  public function __construct($methodHandler = null, $transport = null)
   {
 
     ini_set('display_errors', '0');
@@ -35,6 +35,10 @@ class Server
 
   }
 
+  public function setHandler($handler)
+  {
+    $this->handler = $handler;
+  }
 
   public function receive($input = '')
   {
