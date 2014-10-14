@@ -344,12 +344,15 @@ class Server
 
     foreach ($params as &$param)
     {
-
       if (is_object($param))
       {
         $param = (array) $param;
       }
-
+      // recursive walk
+      if (is_array($param))
+      {
+        $this->castObjectsToArrays($param);
+      }
     }
 
   }
