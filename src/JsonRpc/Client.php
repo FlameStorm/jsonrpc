@@ -415,7 +415,11 @@ class Client
     {
       $code = $error->code;
       $message = $error->message;
-      $data = isset($error->data) ? $error->data : null;
+      $data = null;
+      if (isset($error->data))
+      {
+        $data = is_object($error->data) ? json_encode($error->data) : $error->data;
+      }
     }
 
     $data = $data ? ': ' . $data : '';
