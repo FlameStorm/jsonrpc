@@ -20,11 +20,14 @@ class Server
   private $refClass = null;
 
 
-  public function __construct($methodHandler = null, $transport = null)
+  public function __construct($methodHandler = null, $transport = null, $display_errors = 0)
   {
 
-    ini_set('display_errors', '0');
-
+    if ($display_errors !== false)
+    {
+      ini_set('display_errors', $display_errors);
+    }
+    
     $this->handler = $methodHandler;
     $this->transport = $transport;
 
