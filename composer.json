@@ -1,6 +1,6 @@
 {
 
-  "name": "jsonrpc/jsonrpc",
+  "name": "flamestorm/jsonrpc",
   "description": "JSON-RPC 2.0 client/server implementation",
   "keywords": ["json", "rpc", "json-rpc", "api"],
   "homepage": "http://github.com/johnstevenson/jsonrpc",
