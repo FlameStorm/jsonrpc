@@ -418,7 +418,7 @@ class Client
       $data = null;
       if (isset($error->data))
       {
-        $data = is_object($error->data) ? json_encode($error->data, Rpc::JSON_ENCODE_MODE) : $error->data;
+        $data = is_object($error->data) ? Rpc::encode($error->data) : $error->data;
       }
     }
 

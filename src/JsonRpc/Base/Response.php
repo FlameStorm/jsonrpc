@@ -49,7 +49,7 @@ class Response extends Rpc
 
     $ar['id'] = $this->id;
 
-    return json_encode($ar, Rpc::JSON_ENCODE_MODE);
+    return Rpc::encode($ar);
 
   }
 

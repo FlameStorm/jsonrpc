@@ -21,7 +21,19 @@ class Rpc
   const MODE_GET = 1;
   const MODE_EXISTS = 2;
 
-  const JSON_ENCODE_MODE = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+
+  public static function encode($struct, &$mode = null)
+  {
+
+    if (null === $mode) 
+    {
+      $mode = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+    }
+    $message = @json_encode($struct, $mode);
+
+    return $message;
+
+  }
 
 
   public static function decode($message, &$batch)
