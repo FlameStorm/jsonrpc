@@ -47,6 +47,20 @@ class Client
   public $errorCode = 0;
 
   /**
+  * The full request sent to the server for last rpc call.
+  *
+  * @var mixed
+  */
+  public $lastRequest = null;
+
+  /**
+  * The full response returned by the server for last rpc call.
+  *
+  * @var mixed
+  */
+  public $lastResponse = null;
+
+  /**
   * The raw string output returned by the server.
   *
   * @var string
@@ -106,7 +120,7 @@ class Client
   }
 
 
-  public function call($method, $params)
+  public function call($method, $params = null)
   {
     return $this->work($method, $params);
   }
@@ -141,12 +155,12 @@ class Client
   }
 
 
-  private function work($method, $params, $notify = false)
+  private function work($method, $params = null, $notify = false)
   {
 
     $data = array('method' => $method);
 
-    if ($params)
+    if (is_array($params))
     {
       $data['params'] = $params;
     }
@@ -157,6 +171,8 @@ class Client
     }
 
     $request = new Request($data);
+
+    $this->lastRequest = $request->getRequest();
 
     if ($request->fault)
     {
@@ -231,6 +247,8 @@ class Client
 
       return !$expected;
     }
+
+    $this->lastResponse = $struct;
 
     if ($res = $this->checkResponses($struct, $batch))
     {

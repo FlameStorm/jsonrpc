@@ -8,6 +8,8 @@ class Request extends Rpc
   protected $params = null;
   protected $notification = false;
 
+  protected $request = null;
+
 
   public function __construct($struct)
   {
@@ -26,24 +28,15 @@ class Request extends Rpc
   }
 
 
+  public function getRequest()
+  {
+    return $this->request;
+  }
+
+
   public function toJson()
   {
-
-    $ar['jsonrpc'] = $this->jsonrpc;
-    $ar['method'] = $this->method;
-
-    if ($this->params)
-    {
-      $ar['params'] = $this->params;
-    }
-
-    if (!$this->notification)
-    {
-      $ar['id'] = $this->id;
-    }
-
-    return Rpc::encode($ar);
-
+    return static::encode($this->request);
   }
 
 
@@ -62,7 +55,6 @@ class Request extends Rpc
         $this->notification = true;
       }
 
-      #jsonrpc
       $this->setVersion($struct, $new);
 
       $this->method = $this->get($struct, 'method');
@@ -70,6 +62,20 @@ class Request extends Rpc
       if ($this->get($struct, 'params', static::MODE_EXISTS))
       {
         $this->params = $this->get($struct, 'params');
+      }
+
+      // Assemble the request
+      $this->request['jsonrpc'] = $this->jsonrpc;
+      $this->request['method'] = $this->method;
+
+      if (is_array($this->params))
+      {
+        $this->request['params'] = $this->params;
+      }
+
+      if (!$this->notification)
+      {
+        $this->request['id'] = $this->id;
       }
 
       return true;
